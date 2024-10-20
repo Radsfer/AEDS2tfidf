@@ -4,18 +4,12 @@
 #include <fstream>
 #include <cctype>
 #include <string>
+#include <list>
 using namespace std;
 
-// Início de uma implementação de lista encadeada.
-
-struct no{
-    string palavra;
-    no *prox;
-};
-
-typedef struct{
-   no *head;
-   no *tail; 
-} Lista;
+void tratarTexto(string& texto);
+void removerStopWord(string& texto);
+void abrirArq(string titulo1, list<string>& lista1);
+void imprimirLista(list<string> lista1);
 
 #endif // CODIGO_HPP
