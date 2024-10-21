@@ -1,4 +1,5 @@
 #include "Codigo.hpp"
+#include "Palavra.hpp"
 #include <iostream>
 #include <fstream>
 #include <cctype>
@@ -9,6 +10,8 @@ using namespace std;
 
 int main(){
 
+    set<string> stopwords;
+
     string titulo1 = "datasets/A mão e a luva.txt";
     string titulo2 = "datasets/biblia.txt";
     string titulo3 = "datasets/DomCasmurro.txt";
@@ -16,14 +19,14 @@ int main(){
     string titulo5 = "datasets/Semana_Machado_Assis.txt";
     string titulo6 = "datasets/terremoto.txt";
 
-    list<string> lista1;
+    list<Palavra> lista1;
     // list<string> lista2;
     // list<string> lista3;
     // list<string> lista4;
     // list<string> lista5;
     // list<string> lista6;
-
-    abrirArq(titulo1, lista1);
+    SalvarStopWords(stopwords);
+    abrirArq("datasets/Teste.txt", lista1, stopwords);
     imprimirLista(lista1);
 
     // abirArq(titulo2); 
