@@ -2,7 +2,6 @@
   <img src="assets/image.png" alt="CEFET-MG" width="100px" height="100px">
 </p>
 
-___
 
 <h1 align="center" font-size="200em"><b>Ranqueamento de Documentos | TF-IDF</b></h1>
 
@@ -50,7 +49,6 @@ Portanto, implementamos um algoritmo de ranqueamento de documentos em C++ usando
   |  `make`                | Executa a compilação do programa utilizando o g++, e o resultado vai para a pasta build.          |
   |  `make run`            | Executa o programa da pasta build após a realização da compilação.                                |
 
----
 
 <br>
 
