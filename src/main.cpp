@@ -1,39 +1,29 @@
 #include "Codigo.hpp"
 #include "Palavra.hpp"
-#include <iostream>
-#include <fstream>
 #include <cctype>
+#include <fstream>
+#include <iostream>
+#include <list>
 #include <string>
-#include <list> 
+#include <vector>
 using namespace std;
 
+int main() {
 
-int main(){
-
-    set<string> stopwords;
-
-    string titulo1 = "datasets/A mão e a luva.txt";
-    string titulo2 = "datasets/biblia.txt";
-    string titulo3 = "datasets/DomCasmurro.txt";
-    string titulo4 = "datasets/quincas borba.txt";
-    string titulo5 = "datasets/Semana_Machado_Assis.txt";
-    string titulo6 = "datasets/terremoto.txt";
-
-    list<Palavra> lista1;
-    // list<string> lista2;
-    // list<string> lista3;
-    // list<string> lista4;
-    // list<string> lista5;
-    // list<string> lista6;
-    SalvarStopWords(stopwords);
-    abrirArq("datasets/Teste.txt", lista1, stopwords);
-    imprimirLista(lista1);
-
-    // abirArq(titulo2); 
-    // abirArq(titulo3); 
-    // abirArq(titulo4); 
-    // abirArq(titulo5); 
-    // abirArq(titulo6);
-
-    return 0;
+  set<string> stopwords;
+  vector<string> titulos = {
+      "datasets/A mão e a luva.txt",       "datasets/biblia.txt",
+      "datasets/DomCasmurro.txt",          "datasets/quincas borba.txt",
+      "datasets/Semana_Machado_Assis.txt", "datasets/terremoto.txt"};
+  SalvarStopWords(stopwords);
+  vector<list<Palavra>> listas(titulos.size(), list<Palavra>());
+  cout << "Quantidade di listas: " << listas.size() << endl;
+  string entrada;
+  abrirArq("datasets/Teste.txt", listas.front(), stopwords);
+  // TF_IDF(listas, entrada, stopwords);
+  //  for (int i = 0; i < titulos.size(); i++) {
+  //  abrirArq(titulos[i], listas[i], stopwords);
+  // }
+  imprimirLista(listas.front());
+  return 0;
 }
