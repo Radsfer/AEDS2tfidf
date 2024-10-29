@@ -1,5 +1,8 @@
 #include "Codigo.hpp"
+#include "Palavra.hpp"
+#include <algorithm>
 #include <cctype>
+#include <cmath>
 #include <codecvt>
 #include <fstream>
 #include <iostream>
@@ -8,6 +11,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 using namespace std;
 
 // não tem mais o problema de tratar maiúscula com acento.
@@ -25,6 +29,21 @@ void tratarTexto(string &texto) {
   return;
 }
 
+set<string> tratarFrase(string &frase, const set<string> stopwords) {
+  stringstream ss(frase);
+  set<string> entrada_tratada;
+  string palavra;
+  string frase_tratada;
+
+  while (ss >> palavra) {
+    tratarTexto(palavra); // Trata cada palavra individualmente
+    removerStopWord(palavra, stopwords);
+    if (palavra != "") {
+      entrada_tratada.insert(palavra);
+    }
+  }
+  return entrada_tratada;
+}
 void removerStopWord(string &texto,
                      const set<string> &stopwords) { // auto-explicativo
   if (stopwords.find(texto) != stopwords.end()) {
@@ -98,11 +117,64 @@ void SalvarStopWords(
   return;
 }
 
+// Função para calcular o TF-IDF
 void TF_IDF(vector<list<Palavra>> &listas, string entrada,
-            set<string> stopwords) {
+            const set<string> stopwords) {
+  // 1. Trata a entrada para obter as palavras relevantes
+  set<string> entrada_tratada = tratarFrase(entrada, stopwords);
 
-  tratarTexto(entrada);
-  removerStopWord(entrada, stopwords);
-  cout << entrada << "Quantidade de documentos " << listas.size() << endl;
-  return;
+  // 2. Calcula o IDF para cada termo da entrada_tratada em todos os documentos
+  unordered_map<string, double> idf;
+  int total_docs = listas.size();
+
+  for (const string &termo : entrada_tratada) {
+    int doc_count = 0;
+
+    // Conta em quantos documentos o termo aparece
+    for (auto &lista : listas) {
+      for (Palavra &palavra : lista) {
+
+        if (palavra.getTermo() == termo) {
+          doc_count++;
+          break;
+        }
+      }
+    }
+
+    // Calcula o IDF usando logaritmo para o termo
+    idf[termo] = log(static_cast<double>(total_docs) / (1 + doc_count));
+  }
+
+  // 3. Calcula o TF-IDF para cada documento com base nas palavras da entrada
+  vector<pair<int, double>> relevancia_docs;
+  int qtd_listas = listas.size();
+  for (int i = 0; i < qtd_listas; ++i) {
+    double relevancia_total = 0.0;
+
+    // Calcula o TF-IDF de cada palavra da entrada no documento atual
+    for (const string &termo : entrada_tratada) {
+      for (Palavra &palavra : listas[i]) {
+        if (palavra.getTermo() == termo) {
+          double tf = palavra.getFrequencia();
+          relevancia_total += tf * idf[termo];
+          break;
+        }
+      }
+    }
+
+    // Adiciona o documento e sua relevância na lista de resultados
+    relevancia_docs.emplace_back(i, relevancia_total);
+  }
+
+  // 4. Ordena os documentos por relevância em ordem decrescente
+  sort(relevancia_docs.begin(), relevancia_docs.end(),
+       [](const pair<int, double> &a, const pair<int, double> &b) {
+         return a.second > b.second;
+       });
+
+  // 5. Imprime os documentos em ordem de relevância
+  for (const auto &doc : relevancia_docs) {
+    cout << "Documento " << doc.first << " - Relevância: " << doc.second
+         << endl;
+  }
 }

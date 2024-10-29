@@ -17,13 +17,12 @@ int main() {
       "datasets/Semana_Machado_Assis.txt", "datasets/terremoto.txt"};
   SalvarStopWords(stopwords);
   vector<list<Palavra>> listas(titulos.size(), list<Palavra>());
-  cout << "Quantidade di listas: " << listas.size() << endl;
-  string entrada;
-  abrirArq("datasets/Teste.txt", listas.front(), stopwords);
-  // TF_IDF(listas, entrada, stopwords);
-  //  for (int i = 0; i < titulos.size(); i++) {
-  //  abrirArq(titulos[i], listas[i], stopwords);
-  // }
-  imprimirLista(listas.front());
+  string entrada = "o pavão voa para longe";
+  // abrirArq("datasets/Teste.txt", listas.front(), stopwords);
+  int qtd_listas = titulos.size();
+  for (int i = 0; i < qtd_listas; i++) {
+    abrirArq(titulos[i], listas[i], stopwords);
+  }
+  TF_IDF(listas, entrada, stopwords);
   return 0;
 }
