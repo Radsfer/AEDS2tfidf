@@ -1,11 +1,5 @@
 #include "Codigo.hpp"
 #include "Palavra.hpp"
-#include <cctype>
-#include <fstream>
-#include <iostream>
-#include <list>
-#include <string>
-#include <vector>
 using namespace std;
 
 int main() {
@@ -17,12 +11,24 @@ int main() {
       "datasets/Semana_Machado_Assis.txt", "datasets/terremoto.txt"};
   SalvarStopWords(stopwords);
   vector<list<Palavra>> listas(titulos.size(), list<Palavra>());
-  string entrada = "o pavão voa para longe";
+
   // abrirArq("datasets/Teste.txt", listas.front(), stopwords);
   int qtd_listas = titulos.size();
   for (int i = 0; i < qtd_listas; i++) {
     abrirArq(titulos[i], listas[i], stopwords);
   }
-  TF_IDF(listas, entrada, stopwords);
+
+  char CondicaodeParada;
+  
+  do{
+    cout << "Digite a sentença buscada: " << endl;
+    string entrada;
+    getline(cin, entrada);
+    TF_IDF(listas, entrada, stopwords);
+    cout << "\n Deseja buscar outra sentença? (S/N)." << endl;
+    cin >> CondicaodeParada;
+    cin.ignore();
+  } while(CondicaodeParada == 's' || CondicaodeParada == 'S');
+
   return 0;
 }
