@@ -133,7 +133,6 @@ void TF_IDF(vector<list<Palavra>> &listas, string entrada,
     // Conta em quantos documentos o termo aparece
     for (auto &lista : listas) {
       for (Palavra &palavra : lista) {
-
         if (palavra.getTermo() == termo) {
           doc_count++;
           break;
@@ -142,7 +141,7 @@ void TF_IDF(vector<list<Palavra>> &listas, string entrada,
     }
 
     // Calcula o IDF usando logaritmo para o termo
-    idf[termo] = log(static_cast<double>(total_docs) / (1 + doc_count));
+    idf[termo] = 1 + log(static_cast<double>(total_docs) / (1 + doc_count));
   }
 
   // 3. Calcula o TF-IDF para cada documento com base nas palavras da entrada
@@ -150,12 +149,17 @@ void TF_IDF(vector<list<Palavra>> &listas, string entrada,
   int qtd_listas = listas.size();
   for (int i = 0; i < qtd_listas; ++i) {
     double relevancia_total = 0.0;
-
+    int total_palavras_doc = 0;
+    for (Palavra &total_palavras : listas[i]) {
+      total_palavras_doc += total_palavras.getFrequencia();
+    }
     // Calcula o TF-IDF de cada palavra da entrada no documento atual
     for (const string &termo : entrada_tratada) {
       for (Palavra &palavra : listas[i]) {
+
         if (palavra.getTermo() == termo) {
-          double tf = palavra.getFrequencia();
+          double tf =
+              static_cast<double>(palavra.getFrequencia()) / total_palavras_doc;
           relevancia_total += tf * idf[termo];
           break;
         }

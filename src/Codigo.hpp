@@ -17,6 +17,7 @@ void abrirArq(string titulo1, list<Palavra> &lista1,
               const set<string> stopwords);
 void imprimirLista(list<Palavra> &lista1);
 void SalvarStopWords(set<string> &stopwords);
+set<string> tratarFrase(string &frase, const set<string> stopwords);
 void TF_IDF(vector<list<Palavra>> &listas, string entrada,
             set<string> stopwords);
 

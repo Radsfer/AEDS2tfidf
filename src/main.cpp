@@ -19,16 +19,17 @@ int main() {
   }
 
   char CondicaodeParada;
-  
-  do{
+
+  do {
     cout << "Digite a sentença buscada: " << endl;
     string entrada;
+    cout << "Frase desejada: " << entrada << endl;
     getline(cin, entrada);
     TF_IDF(listas, entrada, stopwords);
     cout << "\n Deseja buscar outra sentença? (S/N)." << endl;
     cin >> CondicaodeParada;
     cin.ignore();
-  } while(CondicaodeParada == 's' || CondicaodeParada == 'S');
+  } while (CondicaodeParada == 's' || CondicaodeParada == 'S');
 
   return 0;
 }
