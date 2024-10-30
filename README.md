@@ -34,12 +34,19 @@ Portanto, implementamos um algoritmo de ranqueamento de documentos em C++ usando
 ## Implementação:
 
 ### Bibliotecas utilizadas:
-- `<cctype>`
-- `<fstream>`
-- `<iostream>`
-- `<list>`
-- `<string>`
-- `<vector>`
+- `<cctype>` : Inclui o cabeçalho da biblioteca de C <ctype.h> e adiciona os nomes associados ao namespace std;
+- `<fstream>` : Define várias classes que dão suporte a operações de iostreams em sequências armazenadas em arquivos externos.
+- `<iostream>` : Declara objetos que controlam a leitura e a gravação nos fluxos padrão.
+- `<list>` : Para a manipulação de dados utilizando a estrutura de lista bidirecionais;
+- `<string>` : Para manipulação de strings;
+- `<algorithm>` : Define as funções de modelo do contêiner da Biblioteca Padrão do C++ que executam algoritmos.
+- `<cmath>` : Inclusão de funções matemáticas, tais como seno, cosseno, logarítmo; etc;
+- `<codevct>` :
+- `<locale>` : Para indicar para a máquina que algumas bibliotecas devem funcionar pensando na lingua portuguesa.
+- `<set>` : Para armazenar e recuperar dados de uma coleção;
+- `<sstream>` : Para operar em strings como fluxo de dados;
+- `<unordered_map>` : Para criar e manipular tabelas hash de modo eficiente;
+- `<vector>` : Para armazenar sequências dinâmicas de elementos.
 
 ## Compilação e Execução:
 
