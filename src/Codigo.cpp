@@ -1,18 +1,4 @@
 #include "Codigo.hpp"
-#include "Palavra.hpp"
-#include <algorithm>
-#include <cctype>
-#include <cmath>
-#include <codecvt>
-#include <fstream>
-#include <iostream>
-#include <list>
-#include <locale>
-#include <set>
-#include <sstream>
-#include <string>
-#include <unordered_map>
-using namespace std;
 
 // não tem mais o problema de tratar maiúscula com acento.
 void tratarTexto(string &texto) {

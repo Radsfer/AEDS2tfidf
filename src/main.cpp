@@ -12,7 +12,6 @@ int main() {
   SalvarStopWords(stopwords);
   vector<list<Palavra>> listas(titulos.size(), list<Palavra>());
 
-  // abrirArq("datasets/Teste.txt", listas.front(), stopwords);
   int qtd_listas = titulos.size();
   for (int i = 0; i < qtd_listas; i++) {
     abrirArq(titulos[i], listas[i], stopwords);

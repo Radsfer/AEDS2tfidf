@@ -1,14 +1,19 @@
 #ifndef CODIGO_HPP
 #define CODIGO_HPP
 #include "Palavra.hpp"
+#include <algorithm>
 #include <cctype>
+#include <cmath>
+#include <codecvt>
 #include <fstream>
 #include <iostream>
 #include <list>
+#include <locale>
 #include <set>
+#include <sstream>
 #include <string>
+#include <unordered_map>
 #include <vector>
-
 using namespace std;
 
 void tratarTexto(string &texto);
