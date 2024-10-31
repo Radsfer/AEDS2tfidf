@@ -54,11 +54,42 @@ Portanto, implementamos um algoritmo de ranqueamento de documentos em C++ usando
 - ```set<string> tratarFrase(string &frase, const set<string> stopwords) ```
 - ```void RemoverStopWord(string &texto, const set<string> &stopwords)```
 - ```void abrirArq(string titulo1, list<Palavra> &lista1, const set<string> stopwords)```
-- ```void ImprimirLIsta(list<Palavra> &lista1)```
+- ```void ImprimirLista(list<Palavra> &lista1)```
 - ```void SalvarStopWords(set<string> &stopwords)```
-- ```void TF_IDF(vextor<list<Palavra>> &listas, string entrada, const set<string> stopwords)```
-  
+- ```void TF_IDF(vector<list<Palavra>> &listas, string entrada, const set<string> stopwords)```
+
+
+## Resolução do Problema:
+
+Esse tipo de problema tem, na concepção do grupo, dois problemas principais, são eles: a grande massa de dados, uma vez que estamos lidando com documentos que, no total, possuem mais de 50 mil linhas, cada uma com uma média minima de 10 à 15 palavras, e o tratamento desse texto. Quando fala-se do tratamento do texto estamos nos referindo ao todo, neste caso o tratamento de stopwords, de acentos e a alocação de todo esse conteúdo no computador de modo que ele possa ser acessado posteriormente de forma rápida.
+
+Sendo assim, ao desenvolver o programa um dos primeiros problemas que encontramos foi na organização do armazenamento das palavras. A ideia inicial era fazer uma Lista enorme que conteria todas as palavras dos textos, mas como é fácil imaginar, essa não é uma solução muito boa. Como na disciplina de AEDS é sempre levada com o pensamento de custo, velocidade e eficiência, é ineficiente fazer o armazenamento da forma como planejamos no início. Sendo assim, recorremos aos conhecimentos desenvolvidos na materia de POO, aproveitando que o C++ - linguagem utilizada no desenvolvimento deste código - é uma linguagem voltada a manipulação de objetos.
+
+Dessa forma criou-se a classe "Palavra", esta classe contém uma string onde é armazenada a palavra propriamente dita e um inteiro chamado frequência. Como o nome diz, neste inteiro é armazenada a quantidade de vezes que uma palavra apareceu dentro de seu texto respectivo. Dessa forma passamos a utilizar a estrutura Lista de forma mais eficiente e melhor planejada, decisão que ajudaria futuramente a calcular o valor TF-IDF mais facilmente.
+
+Além da implementação de uma classe, outra decisão tomada foi utilizar a biblioteca <set>, que é uma das bibliotecas Standard de C++. Basicamente essa biblioteca armazena dados utilizando o conceito de árvores, como a rubro negra e a AVL, por exemplo. Utilizamos isso para armazenar as strings de StopWords, que, como estavam alocadas em àrvores balanceadas, mantiveram um custo de pesquisa interno de (log n), ou seja, uma pesquisa rápida e eficiente. Essa decisão foi bem acertada e permitiu que o tratamento dos documentos de texto fosse feita de forma símples e didática para uma pessoa externa que olhe o código.
+
+Outra decisão de implementação foi o uso da biblioteca <locale> em união da <codevct>, basicamente para o tratamento de todas as palavras para minúsculas. Isso é importante ressaltar pois há casos em que a a função "tolower()" é incapaz de lidar com acentos específicos de um idioma, tal como o o cedilha (ç), e isso pode levar a problemas futuros no cáluclo do TF-IDF, pois palavras como conheço e CONHEÇO, seriam armazenadas como palavras distintas porque a função tolower(), ao menos no Ubunto, converte "CONHEÇO" para "conheÇo", ou seja, um problema óbvio que pode desviar os dados do TF-IDF posteriormente.
+
+Agora, antes de falar da implementação do TF-IDF, basta dizer que também foram criadas "codigo.hpp" e "codigo.cpp". São nessas pastas onde as funções mais importantes estão presentes, bem como a declaração de todas as bibliotecas. A maioria das funções estão comentadas e seus nomes são significativos, ou seja, a função "removerStopWord", por exemplo, faz exatamente o que seu nome diz. Isso foi feito apenas para fins de organização e boas práticas de programação.
+
+Por fim, a implementação do TF-IDF. Neste código a função TF-IDF basicamente utiliza outras funções que fazem os devidos tratamentos e só no fim faz o cálculo de fato. A função recebe como entrada um Vector de Listas, essas listas são de objetos da classe Palavra. Além disso a função também recebe a string de entrada, ou seja, a string que o usuário fornece e, por fim, o set com as stopwords. 
+
+Após isso a função chama o tratamento de frases, que é feito na frase de entrada fornecida pelo usuário. Após isso entra-se no cálculo do IDF que é feito com cada termo da entrada fornecida pelo usuário após o tratamento da mesma. O algorítmo também confere se cada termo aparece em cada documento. Por fim o logarítmo é aplicado para calcular o IDF de fato.
+
+Depois de calcular o IDF é feito o TF-IDF, novamente para cada documento com base na entrada fornecida pelo usuário. É de se imaginar que esse foi o processo mais custoso de todo o programa, uma vez que é necessário calcular os valores para cada palavra de entrada em cada um dos documentos que estamos utilizando. Após cada cálculo de documento o valor é salvo em uma lista de relevância, que ao fim é ordenada de ordem decrescente e, por fim, impressa no terminal.
+
+<p aligh='justify'>
+
+</p>
+
 ## Compilação e Execução:
+
+ Especificações da máquina em que o código foi rodado:
+  * Processador Intel Core i5, 10th Gen;
+  * Sistema Operacional Windows 11 Home;
+  * Terminal do WSL: Ubuntu 22.04.5;
+  * 16GB de RAM.
 
 | Comando                |  Função                                                                                           |                     
   | -----------------------| ------------------------------------------------------------------------------------------------- |
