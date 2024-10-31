@@ -31,6 +31,15 @@ Portanto, implementamos um algoritmo de ranqueamento de documentos em C++ usando
 
 <br>
 
+## Objetivos:
+
+<p aligh='justify'>
+Este trabalho inicial tem por objetivo reforçar os conhecimentos adquiridos na primeira parte desta disciplina que é dividida em duas. Desta forma, trabalharemos com conceitos como anaĺise assintótica, utilização de Tabelas Hash, Filas, Listas ou Pilhas e demais estruturas uteis que foram aprendidas anterioremente. 
+
+Além disso, conforme desenvolve-se o código, podemos ter uma ideia inicial de estruturas mais complexas que trabalharemos daqui em diante, como árvores, por exemplo, e outros tipos de implementações mais elegantes que poderiam ajudar no desenvolvimento do problema. Sendo assim, o objetivo último deste trabalho é agir como um introdutório a essas estruturas e um reforço aos conhecimentos adquiridos até o momento.
+</p>
+
+
 ## Implementação:
 
 ### Bibliotecas utilizadas:
@@ -61,6 +70,7 @@ Portanto, implementamos um algoritmo de ranqueamento de documentos em C++ usando
 
 ## Resolução do Problema:
 
+<p aligh='justify'>
 Esse tipo de problema tem, na concepção do grupo, dois problemas principais, são eles: a grande massa de dados, uma vez que estamos lidando com documentos que, no total, possuem mais de 50 mil linhas, cada uma com uma média minima de 10 à 15 palavras, e o tratamento desse texto. Quando fala-se do tratamento do texto estamos nos referindo ao todo, neste caso o tratamento de stopwords, de acentos e a alocação de todo esse conteúdo no computador de modo que ele possa ser acessado posteriormente de forma rápida.
 
 Sendo assim, ao desenvolver o programa um dos primeiros problemas que encontramos foi na organização do armazenamento das palavras. A ideia inicial era fazer uma Lista enorme que conteria todas as palavras dos textos, mas como é fácil imaginar, essa não é uma solução muito boa. Como na disciplina de AEDS é sempre levada com o pensamento de custo, velocidade e eficiência, é ineficiente fazer o armazenamento da forma como planejamos no início. Sendo assim, recorremos aos conhecimentos desenvolvidos na materia de POO, aproveitando que o C++ - linguagem utilizada no desenvolvimento deste código - é uma linguagem voltada a manipulação de objetos.
@@ -78,10 +88,25 @@ Por fim, a implementação do TF-IDF. Neste código a função TF-IDF basicament
 Após isso a função chama o tratamento de frases, que é feito na frase de entrada fornecida pelo usuário. Após isso entra-se no cálculo do IDF que é feito com cada termo da entrada fornecida pelo usuário após o tratamento da mesma. O algorítmo também confere se cada termo aparece em cada documento. Por fim o logarítmo é aplicado para calcular o IDF de fato.
 
 Depois de calcular o IDF é feito o TF-IDF, novamente para cada documento com base na entrada fornecida pelo usuário. É de se imaginar que esse foi o processo mais custoso de todo o programa, uma vez que é necessário calcular os valores para cada palavra de entrada em cada um dos documentos que estamos utilizando. Após cada cálculo de documento o valor é salvo em uma lista de relevância, que ao fim é ordenada de ordem decrescente e, por fim, impressa no terminal.
-
-<p aligh='justify'>
-
 </p>
+
+## Custos Computacionais:
+  
+<p aligh='justify'>
+  
+  A função ``tratarTexto`` possui custo computacional de O(n), onde n é a quantidade de caracteres na string texto que passara pela função tolower().
+  
+  A função``tratarFrase`` possui custo computacional de O(m * log x), onde m é o número de palvras na /frase e x é o custo associado ao uso da biblioteca <set>, que cria uma àrvore balanceada. Em àrvores deste modelo o custo de caminhamento é log k, onde k é a quantidade de elementos nessa àrvore.
+
+  A função ``removerStopWords``, como citado anteriormente, possui custo de O(log k), onde k é o número de nós da àrvore.
+
+  A função ``abrirArq`` abre o arquivo e lê as palavras no texto. Sendo assim seu custo é o produto da quantidade de linhas no texto pela quantidade de palavras. Além disso essa função também adiciona as palavras achadas à uma lista, sendo assim o custo também deve ser múltiplicado pela quantidade de termos desta lista, pois é necessário percorré-la todas as vezes para garantir que não há repetições. Dessa forma, o custo dessa função é O(l*p*n).
+
+  A função ``ImprimirLista`` possui custo associado de O(n), uma vez que é apenas necessário percorrer os n elementos da lista e, então, printa-los no terminal.
+
+  A função ``SalvarStopWords``possui custo associado de O(n), uma vez que é necessário percorrer todo o documento txt que possui as stopwords e, então armazená-las utilizando a biblioteca <set>, como dito anteriormente.
+</p>
+
 
 ## Compilação e Execução:
 
