@@ -105,6 +105,8 @@ Depois de calcular o IDF é feito o TF-IDF, novamente para cada documento com ba
   A função ``ImprimirLista`` possui custo associado de O(n), uma vez que é apenas necessário percorrer os n elementos da lista e, então, printa-los no terminal.
 
   A função ``SalvarStopWords``possui custo associado de O(n), uma vez que é necessário percorrer todo o documento txt que possui as stopwords e, então armazená-las utilizando a biblioteca <set>, como dito anteriormente.
+
+  A função ``TF_IDF`` possui custo computacional relacionado a função ``tratarFrase``, que considera a quantidade de *N* termos avaliados na entrada, a quantidade *D* de documentos e a quantidade *P* de palavras únicas presentes em cada lista por documento. Considerando assim um custo computacional relativo de O(N * D * P).
 </p>
 
 
