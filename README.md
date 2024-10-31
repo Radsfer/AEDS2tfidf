@@ -100,7 +100,7 @@ Depois de calcular o IDF é feito o TF-IDF, novamente para cada documento com ba
 
   A função ``removerStopWords``, como citado anteriormente, possui custo de O(log k), onde k é o número de nós da àrvore.
 
-  A função ``abrirArq`` abre o arquivo e lê as palavras no texto. Sendo assim seu custo é o produto da quantidade de linhas no texto pela quantidade de palavras. Além disso essa função também adiciona as palavras achadas à uma lista, sendo assim o custo também deve ser múltiplicado pela quantidade de termos desta lista, pois é necessário percorré-la todas as vezes para garantir que não há repetições. Dessa forma, o custo dessa função é O(l*p*n).
+  A função ``abrirArq`` abre o arquivo e lê as palavras no texto. Sendo assim seu custo é o produto da quantidade de linhas no texto pela quantidade de palavras. Além disso essa função também adiciona as palavras achadas à uma lista, sendo assim o custo também deve ser múltiplicado pela quantidade de termos desta lista, pois é necessário percorré-la todas as vezes para garantir que não há repetições. Dessa forma, o custo dessa função é O(l * p * n).
 
   A função ``ImprimirLista`` possui custo associado de O(n), uma vez que é apenas necessário percorrer os n elementos da lista e, então, printa-los no terminal.
 
