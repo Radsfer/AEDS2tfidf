@@ -128,6 +128,13 @@ Depois de calcular o IDF é feito o TF-IDF, novamente para cada documento com ba
 
 </p>
 
+## Análise Crítica
+- O uso da classe "Palavra" teoricamente sai mais caro do que fazer a mesma implementação usando um struct que armazena os mesmos dados, mas implementar a abordagem de orientação a objetos foi uma decisão de fase inicial por parte do grupo;
+
+- Implementar listas e fazer pesquisas dentro dela envolve percorrê-la, no pior dos casos, com custo computacional O(n), mas usar listas ou filas para armazenar os termos presentes no documento foi uma solicitação de enunciado e uma decisão de fase inicial por parte do grupo. Com os conhecimentos atuais, implementar estruturas de pesquisa binária, como uma árvore binária ou mesmo uma hash table iria reduzir esse custo para O(log n). Porém, seguimos o solicitado e pudemos verificar que utilizar as estruturas que estamos vendo atualmente em AEDS II iria tornar nossos algoritmos bem mais eficientes.
+
+- Implementar a biblioteca `<set>` envolveu pesquisar seu custo, que está na casa de O(log n). Ela funciona com árvore balanceada, o que justifica esse custo. Isso melhorou nossa eficiência, teoricamente, em partes do código em que poderíamos ter sido mais "brutos". Porém, não foi uma implementação nossa, mas sim uma consequência do uso dessa biblioteca.
+
 ## Compilação e Execução:
 
  Especificações da máquina em que o código foi rodado:
