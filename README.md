@@ -48,6 +48,16 @@ Portanto, implementamos um algoritmo de ranqueamento de documentos em C++ usando
 - `<unordered_map>` : Para criar e manipular tabelas hash de modo eficiente;
 - `<vector>` : Para armazenar sequências dinâmicas de elementos.
 
+### Funções:
+
+- ```void tratarTexto(string &texto)```
+- ```set<string> tratarFrase(string &frase, const set<string> stopwords) ```
+- ```void RemoverStopWord(string &texto, const set<string> &stopwords)```
+- ```void abrirArq(string titulo1, list<Palavra> &lista1, const set<string> stopwords)```
+- ```void ImprimirLIsta(list<Palavra> &lista1)```
+- ```void SalvarStopWords(set<string> &stopwords)```
+- ```void TF_IDF(vextor<list<Palavra>> &listas, string entrada, const set<string> stopwords)```
+  
 ## Compilação e Execução:
 
 | Comando                |  Função                                                                                           |                     
