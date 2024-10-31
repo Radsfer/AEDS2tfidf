@@ -31,15 +31,6 @@ Portanto, implementamos um algoritmo de ranqueamento de documentos em C++ usando
 
 <br>
 
-## Objetivos:
-
-<p aligh='justify'>
-Este trabalho inicial tem por objetivo reforçar os conhecimentos adquiridos na primeira parte desta disciplina que é dividida em duas. Desta forma, trabalharemos com conceitos como anaĺise assintótica, utilização de Tabelas Hash, Filas, Listas ou Pilhas e demais estruturas uteis que foram aprendidas anterioremente. 
-
-Além disso, conforme desenvolve-se o código, podemos ter uma ideia inicial de estruturas mais complexas que trabalharemos daqui em diante, como árvores, por exemplo, e outros tipos de implementações mais elegantes que poderiam ajudar no desenvolvimento do problema. Sendo assim, o objetivo último deste trabalho é agir como um introdutório a essas estruturas e um reforço aos conhecimentos adquiridos até o momento.
-</p>
-
-
 ## Implementação:
 
 ### Bibliotecas utilizadas:
@@ -60,55 +51,82 @@ Além disso, conforme desenvolve-se o código, podemos ter uma ideia inicial de 
 ### Funções:
 
 - ```void tratarTexto(string &texto)```
-- ```set<string> tratarFrase(string &frase, const set<string> stopwords) ```
+
+  Essa função recebe uma string de texto, que é uma das palavras extraídas do documento, e faz o seu tratamento. Ela percorre as letras da palavra em um laço de repetição, diminuindo as maiúsculas com `tolower`. Usa o `wstring` e o `codevct` para tratar melhor as letras maiúsculas com acento. 
+  
+  Seu custo é estimado em O(n), com *n* sendo a quantidade de caracteres na string texto que passara pela função `tolower`.
+
+- ```set<string> tratarFrase(string &frase, const set<string> stopwords)```
+  
+  Essa função abrange o tratamento geral de uma frase de entrada, inserida para o cálculo do TF-IDF. Ela percorre cada palavra da frase em um laço de repetição, com cada uma sendo tratada usando a função `tratarTexto` e suas stopwords são tratadas usando a função `RemoverStopWord`, retornando a frase de entrada tratada.
+
+  Seu custo é estimado em O(n), com *n* sendo o número de palavras da frase. Como `tratarTexto` percorre cada letra da palavra, o custo real é de O(l * log x), em que l é o número total de letras da frase, e log x é o custo associado à biblioteca `<set>`, em que *x* é o número de stopwords.
+
 - ```void RemoverStopWord(string &texto, const set<string> &stopwords)```
+
+  Essa função é individualmente responsável por tratar as stopwords do texto, recebendo individualmente uma palavra e uma string que contém todas as stopwords. Se a palavra verificada pela função for uma stopword, ela é substituída por duas aspas, o que uniformiza todas as stopwords do texto em apenas um termo.
+
+  Por apenas fazer uma verificação condicional, seu custo é estimado em O(1) por si só. Porém, o custo real é O(log x), que é o custo associado à biblioteca `<set>`, em que *x* é o número de stopwords.
+
 - ```void abrirArq(string titulo1, list<Palavra> &lista1, const set<string> stopwords)```
+
+  Essa função é a responsável por extrair as palavras dos datasets de documentos, funcionando individualmente para cada documento. Enquanto houverem linhas disponíveis, a função percorre cada palavra da linha, e as trata usando as funções `tratarTexto` e `RemoverStopWord`. Se após isso a palavra for a generalização de aspas da stopword, ela é descartada. Caso seja uma palavra válida, a função percorre a lista de palavras salvas para verificar se ela já existe lá. Se sim, a frequência da palavra é atualizada. Se não, ela é inserida na lista.
+
+  No total, são percorridas *n* linhas do documento, e cada linha possui *x* palavras, que variam para cada linha. Além disso, usa a biblioteca `<set>`. Portanto, o custo estimado é de O(n * l * log x).
+
 - ```void ImprimirLista(list<Palavra> &lista1)```
+
+  Essa função percorre a lista de palavras do documento e a imprime no terminal. O custo é O(n), com n sendo o número de palavras da lista.
+
 - ```void SalvarStopWords(set<string> &stopwords)```
+
+  Essa função implementa um `set<string>`, assim inserindo todas as stopwords em uma string. Enquanto houver linhas (stopwords) no documento de stopwords, elas serão adicionadas na string. Assim, o custo é O(n * log x), em que *n* é o número de linhas/stopwords desse documento, e *x* é o número de stopwords. O log x é o custo associado a `<set>`.
+
 - ```void TF_IDF(vector<list<Palavra>> &listas, string entrada, const set<string> stopwords)```
+
+  Essa é a função que implementa o TF-IDF de fato. Pode ser definida em fases:
+  
+  1. Trata a frase de entrada com a função `tratarFrase`;
+  2. Calcula o IDF de cada termo da frase, com o auxílio de uma tabela hash;
+  3. Calcula o TF-IDF de cada documento, com base em cada palavra da frase;
+  4. Ordena os documentos por relevância em ordem decrescente;
+  5. Imprime as informações no terminal.
+
+  A função `TF_IDF` possui custo computacional relacionado a função tratarFrase, que considera a quantidade de N termos avaliados na entrada, a quantidade D de documentos e a quantidade P de palavras únicas presentes em cada lista por documento. Considerando assim um custo computacional relativo de O(N * D * P).
+
+## Rotina do Código
+
+1. A função `SalvarStopwords` é chamada para salvar as stopwords em uma string;
+2. Os endereços dos títulos são salvos em uma lista de strings, e cada acesso é percorrido para iterar a função `abrirArq` por *n* vezes, com *n* sendo o número de documentos. Assim, as palavras de cada documento e suas frequências são salvos em uma lista do objeto Palavra.
+3. A frase de entrada é inserida e é chamada a função `TF_IDF` para o cálculo do TF, IDF, cálculo do TF-IDF, ranquear os documentos e imprimir o ranqueamento dos documentos, além de outros aspectos das suas 5 fases.
 
 
 ## Resolução do Problema:
 
-<p aligh='justify'>
+#### Desafios e problemas encontrados:
 Esse tipo de problema tem, na concepção do grupo, dois problemas principais, são eles: a grande massa de dados, uma vez que estamos lidando com documentos que, no total, possuem mais de 50 mil linhas, cada uma com uma média minima de 10 à 15 palavras, e o tratamento desse texto. Quando fala-se do tratamento do texto estamos nos referindo ao todo, neste caso o tratamento de stopwords, de acentos e a alocação de todo esse conteúdo no computador de modo que ele possa ser acessado posteriormente de forma rápida.
 
 Sendo assim, ao desenvolver o programa um dos primeiros problemas que encontramos foi na organização do armazenamento das palavras. A ideia inicial era fazer uma Lista enorme que conteria todas as palavras dos textos, mas como é fácil imaginar, essa não é uma solução muito boa. Como na disciplina de AEDS é sempre levada com o pensamento de custo, velocidade e eficiência, é ineficiente fazer o armazenamento da forma como planejamos no início. Sendo assim, recorremos aos conhecimentos desenvolvidos na materia de POO, aproveitando que o C++ - linguagem utilizada no desenvolvimento deste código - é uma linguagem voltada a manipulação de objetos.
 
+#### Descrição de implementações utilizadas:
 Dessa forma criou-se a classe "Palavra", esta classe contém uma string onde é armazenada a palavra propriamente dita e um inteiro chamado frequência. Como o nome diz, neste inteiro é armazenada a quantidade de vezes que uma palavra apareceu dentro de seu texto respectivo. Dessa forma passamos a utilizar a estrutura Lista de forma mais eficiente e melhor planejada, decisão que ajudaria futuramente a calcular o valor TF-IDF mais facilmente.
 
-Além da implementação de uma classe, outra decisão tomada foi utilizar a biblioteca <set>, que é uma das bibliotecas Standard de C++. Basicamente essa biblioteca armazena dados utilizando o conceito de árvores, como a rubro negra e a AVL, por exemplo. Utilizamos isso para armazenar as strings de StopWords, que, como estavam alocadas em àrvores balanceadas, mantiveram um custo de pesquisa interno de (log n), ou seja, uma pesquisa rápida e eficiente. Essa decisão foi bem acertada e permitiu que o tratamento dos documentos de texto fosse feita de forma símples e didática para uma pessoa externa que olhe o código.
+Além da implementação de uma classe, outra decisão tomada foi utilizar a biblioteca `<set>`, que é uma das bibliotecas Standard de C++. Basicamente essa biblioteca armazena dados utilizando o conceito de árvores, como a rubro negra e a AVL, por exemplo. Utilizamos isso para armazenar as strings de StopWords, que, como estavam alocadas em àrvores balanceadas, mantiveram um custo de pesquisa interno de (log n), ou seja, uma pesquisa rápida e eficiente. Essa decisão foi bem acertada e permitiu que o tratamento dos documentos de texto fosse feita de forma símples e didática para uma pessoa externa que olhe o código.
 
-Outra decisão de implementação foi o uso da biblioteca <locale> em união da <codevct>, basicamente para o tratamento de todas as palavras para minúsculas. Isso é importante ressaltar pois há casos em que a a função "tolower()" é incapaz de lidar com acentos específicos de um idioma, tal como o o cedilha (ç), e isso pode levar a problemas futuros no cáluclo do TF-IDF, pois palavras como conheço e CONHEÇO, seriam armazenadas como palavras distintas porque a função tolower(), ao menos no Ubunto, converte "CONHEÇO" para "conheÇo", ou seja, um problema óbvio que pode desviar os dados do TF-IDF posteriormente.
+Outra decisão de implementação foi o uso da biblioteca `<locale>` em união da `<codevct>`, basicamente para o tratamento de todas as palavras para minúsculas. Isso é importante ressaltar pois há casos em que a a função "tolower()" é incapaz de lidar com acentos específicos de um idioma, tal como o o cedilha (ç), e isso pode levar a problemas futuros no cáluclo do TF-IDF, pois palavras como conheço e CONHEÇO, seriam armazenadas como palavras distintas porque a função tolower(), ao menos no Ubunto, converte "CONHEÇO" para "conheÇo", ou seja, um problema óbvio que pode desviar os dados do TF-IDF posteriormente.
 
 Agora, antes de falar da implementação do TF-IDF, basta dizer que também foram criadas "codigo.hpp" e "codigo.cpp". São nessas pastas onde as funções mais importantes estão presentes, bem como a declaração de todas as bibliotecas. A maioria das funções estão comentadas e seus nomes são significativos, ou seja, a função "removerStopWord", por exemplo, faz exatamente o que seu nome diz. Isso foi feito apenas para fins de organização e boas práticas de programação.
 
+#### Implementação do TF-IDF:
 Por fim, a implementação do TF-IDF. Neste código a função TF-IDF basicamente utiliza outras funções que fazem os devidos tratamentos e só no fim faz o cálculo de fato. A função recebe como entrada um Vector de Listas, essas listas são de objetos da classe Palavra. Além disso a função também recebe a string de entrada, ou seja, a string que o usuário fornece e, por fim, o set com as stopwords. 
 
 Após isso a função chama o tratamento de frases, que é feito na frase de entrada fornecida pelo usuário. Após isso entra-se no cálculo do IDF que é feito com cada termo da entrada fornecida pelo usuário após o tratamento da mesma. O algorítmo também confere se cada termo aparece em cada documento. Por fim o logarítmo é aplicado para calcular o IDF de fato.
 
 Depois de calcular o IDF é feito o TF-IDF, novamente para cada documento com base na entrada fornecida pelo usuário. É de se imaginar que esse foi o processo mais custoso de todo o programa, uma vez que é necessário calcular os valores para cada palavra de entrada em cada um dos documentos que estamos utilizando. Após cada cálculo de documento o valor é salvo em uma lista de relevância, que ao fim é ordenada de ordem decrescente e, por fim, impressa no terminal.
-</p>
 
-## Custos Computacionais:
-  
 <p aligh='justify'>
-  
-  A função ``tratarTexto`` possui custo computacional de O(n), onde n é a quantidade de caracteres na string texto que passara pela função tolower().
-  
-  A função``tratarFrase`` possui custo computacional de O(m * log x), onde m é o número de palvras na /frase e x é o custo associado ao uso da biblioteca <set>, que cria uma àrvore balanceada. Em àrvores deste modelo o custo de caminhamento é log k, onde k é a quantidade de elementos nessa àrvore.
 
-  A função ``removerStopWords``, como citado anteriormente, possui custo de O(log k), onde k é o número de nós da àrvore.
-
-  A função ``abrirArq`` abre o arquivo e lê as palavras no texto. Sendo assim seu custo é o produto da quantidade de linhas no texto pela quantidade de palavras. Além disso essa função também adiciona as palavras achadas à uma lista, sendo assim o custo também deve ser múltiplicado pela quantidade de termos desta lista, pois é necessário percorré-la todas as vezes para garantir que não há repetições. Dessa forma, o custo dessa função é O(l * p * n).
-
-  A função ``ImprimirLista`` possui custo associado de O(n), uma vez que é apenas necessário percorrer os n elementos da lista e, então, printa-los no terminal.
-
-  A função ``SalvarStopWords``possui custo associado de O(n), uma vez que é necessário percorrer todo o documento txt que possui as stopwords e, então armazená-las utilizando a biblioteca <set>, como dito anteriormente.
-
-  A função ``TF_IDF`` possui custo computacional relacionado a função ``tratarFrase``, que considera a quantidade de *N* termos avaliados na entrada, a quantidade *D* de documentos e a quantidade *P* de palavras únicas presentes em cada lista por documento. Considerando assim um custo computacional relativo de O(N * D * P).
 </p>
-
 
 ## Compilação e Execução:
 
