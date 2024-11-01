@@ -169,14 +169,25 @@ Depois de calcular o IDF é feito o TF-IDF, novamente para cada documento com ba
  <p align="center"><img src="assets/Terremoto.png"></p>
  <p align="center"> Caso de teste pensado para o documento Terremoto. </p>
 
- <p align="center"><img src="assets/Geral1.png"></p>
- <p align="center"> Caso de teste pensado para para ser geral, sem tendenciar à um documento. </p>
+Tratado durante o programa como "Documento 5", este documento representa o .txt "Terremoto". Assim como foi feito nos testes anteriores, este também fez uso de palavras que tendenciaram o TF-IDF à atribuir maior relevância a um dos documentos. Utilizando as palavras "tempo" e "fogo", que aparecem mais neste texto, o TF-IDF atribui a maior relevância ao documento 5, como resperado.
 
+ <p align="center"><img src="assets/Geral1.png"></p>
  <p align="center"><img src="assets/Geral2.png"></p>
- <p align="center"> Caso de teste pensado para ser geral, sem tendenciar à um documento. </p>
-  
+ <p align="center"> Casos de teste pensados para serem gerais, sem tendenciar à um documento. </p>
+
+ Nestes dois casos finais, a frase de entrada foi aleatória, ou seja, não foi pensado ou analisado previamente se um documento possuia maior o menor frequência de cada palavra, podendo tendênciar os resultados. Como é possível ver, quando são usadas sentenças aleatórias a tendência é que haja um equilíbrio, situação bem ilustrada nas duas imagens. É possível notar que os valores estão proxímos, muitas vezes distoando por uma margem baixa. Além disso nenhum dos documentos apresenta valor de relevância 0, um bom sinal de que a entrada não foi tendenciada.
+
+ Por fim, tratando-se do tempo de execução, baseado em uma média de execuções, o tempo estimado para fazer todo o carregamento das palavras, tratamentos e atribuição das frequências é de 4 minutos. A função de cálculo do TF-IDF acaba funcionando bem rápido, uma vez que os dados são tratados antes de chegarem à ela. Ainda assim, em questão de tempo, o programa pode ser considerado como lento.
   
 </p>
+
+## Conclusão
+
+  As principais decisões implementadas, como o uso de listas para armazenar objetos da classe Palavra e da biblioteca `<set>` para as stopwords, otimizaram o desempenho e permitiram maior organização e legibilidade do código. A escolha pela orientação a objetos, embora possa trazer um custo adicional, resultou em uma organização mais enxuta, tornando o código mais fácil de expandir e manter.
+
+Nos testes realizados, observou-se que o TF-IDF cumpriu bem o papel de ranquear documentos com base em palavras de entrada selecionadas, validando a eficácia do algoritmo em identificar a relevância de um documento com relação à consulta. No entanto, o tempo de execução, principalmente para o carregamento e tratamento dos textos, mostrou-se um ponto de aprimoramento, sugerindo que o uso de estruturas de dados mais eficientes poderiam acelerar o processo.
+
+Por fim, acredita-se que é possível afirmar que o projeto contribuir para o entendimento do conteúdo da primeira parte da disciplina, que era um dos objetivos principais ao desenvolver este projeto. Além disso, o trabalho permitiu que os integrantes tivessem contato com o algorítmo de TF-IDF, além da tentativa de otimizar algoritmos de ranqueamento de documentos de larga escala.
 
 ## Compilação e Execução:
 
