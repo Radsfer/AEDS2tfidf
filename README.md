@@ -31,6 +31,13 @@ Portanto, implementamos um algoritmo de ranqueamento de documentos em C++ usando
 
 <br>
 
+## Objetivos:
+<p aligh='justify'>
+Este trabalho inicial tem por objetivo reforçar os conhecimentos adquiridos na primeira parte desta disciplina que é dividida em duas. Desta forma, trabalharemos com conceitos como anaĺise assintótica, utilização de Tabelas Hash, Filas, Listas ou Pilhas e demais estruturas uteis que foram aprendidas anterioremente. 
+  
+Além disso, conforme desenvolve-se o código, podemos ter uma ideia inicial de estruturas mais complexas que trabalharemos daqui em diante, como árvores, por exemplo, e outros tipos de implementações mais elegantes que poderiam ajudar no desenvolvimento do problema. Sendo assim, o objetivo último deste trabalho é agir como um introdutório a essas estruturas e um reforço aos conhecimentos adquiridos até o momento.
+</p>
+
 
 ## Implementação:
 
@@ -71,7 +78,7 @@ Assim como na leitura dos documentos, uma **lista** foi implementada usando a bi
 
 Por mais que filas e pilhas pudessem ser implementadas, o uso da lista como uma generalização pareceu mais apropriada para essa aplicação e para o acesso de dados que decidimos utilizar. Também não é um cenário em que a implementação de uma tabela hash pareceu fornecer ganhos tão significativos.
 
-### Estruturação do Código
+### Arquivos
 
 #### assets:
 - `logo.png`: A logo da instituição, usada nesse README.
@@ -86,6 +93,7 @@ Por mais que filas e pilhas pudessem ser implementadas, o uso da lista como uma 
 - `terremoto.txt`: dataset em texto do documento *Relação do formidavel, e lastimoso terremoto succedido no Reino de Valença*, disponível em domínio público.
 #### Outros:
 - `stopwords.txt`: arquivo de texto com todas as stopwords usadas para tratamento de texto.
+- `Testes.txt` : arquivo com as entradas comentadas durante os Resultados.
 
 #### src
 - `main.cpp`: arquivo com a principal rotina do código.
