@@ -47,6 +47,7 @@ Portanto, implementamos um algoritmo de ranqueamento de documentos em C++ usando
 - `<sstream>` : Para operar em strings como fluxo de dados;
 - `<unordered_map>` : Para criar e manipular tabelas hash de modo eficiente;
 - `<vector>` : Para armazenar sequências dinâmicas de elementos.
+- `<time.h>`: Biblioteca usada para medir o tempo de execução do programa.
 
 ### Funções:
 
@@ -134,6 +135,48 @@ Depois de calcular o IDF é feito o TF-IDF, novamente para cada documento com ba
 - Implementar listas e fazer pesquisas dentro dela envolve percorrê-la, no pior dos casos, com custo computacional O(n), mas usar listas ou filas para armazenar os termos presentes no documento foi uma solicitação de enunciado e uma decisão de fase inicial por parte do grupo. Com os conhecimentos atuais, implementar estruturas de pesquisa binária, como uma árvore binária ou mesmo uma hash table iria reduzir esse custo para O(log n). Porém, seguimos o solicitado e pudemos verificar que utilizar as estruturas que estamos vendo atualmente em AEDS II iria tornar nossos algoritmos bem mais eficientes.
 
 - Implementar a biblioteca `<set>` envolveu pesquisar seu custo, que está na casa de O(log n). Ela funciona com árvore balanceada, o que justifica esse custo. Isso melhorou nossa eficiência, teoricamente, em partes do código em que poderíamos ter sido mais "brutos". Porém, não foi uma implementação nossa, mas sim uma consequência do uso dessa biblioteca.
+
+## Resultados:
+
+<p aligh='justify'>
+  Agora falando sobre os resultados, primeiro é preciso dizer que, ao se pesquisar palavras mais tendenciosas, como "Capitu", claramente ajudam o documento relacionado à Dom Casmurro, uma vez que a incidência dessa palavra acontece mais neste arquivo. É possível fazer isso para todos os documentos, caso encontre palavras com alta repetição, ou seja, alta frequência dentro do documento. Desse modo, tem-se os seguintes casos de teste, cada um elencando um dos documentos em em primeiro lugar.
+
+<p align="center"><img src="assets/AmãoeaLuva.png"></p>
+ <p align="center"> Caso de teste pensado para o documento A Mão e a Luva. </p>
+
+ Tratado durante o programa como "Documento 0", este documento representa o .txt "A mão e a luva". Neste exemplo utilizou-se na entrada um nome, neste caso Luiz Alves, que é uma entrada com alta incidência. Desse modo, tendencia-se, como esperado, que o TF-IDF dê o maior valor a este documento.
+
+ <p align="center"><img src="assets/Bíblia.png"></p>
+ <p align="center"> Caso de teste pensado para o documento da Bíblia. </p>
+
+ Tratado durante o programa como "Documento 1", este documento representa o .txt "Bíblia". Ao utilizar palavras como "Deus", "Senhor" e 'Bendito", tendencia-se o TF-IDF à elencar a bíblia como o documento que possui a maior relevância para essa entrada, como é o esperado.
+
+ <p align="center"><img src="assets/DomCasmurro.png"></p>
+ <p align="center"> Caso de teste pensado para o documento Dom Casmurro. </p>
+
+ Tratado durante o programa como "Documento 2", este documento representa o .txt "Dom Casmurro". Neste exemplo utilizou-se a entrada "Capitu" e "Sertão" ambas palavras que possuem alta incidência neste texto. Capitu é um nome próprio e a ambientação do livro é no sertão. Sendo assim, novamente o TF-IDF retorna, como esperado, que o documento 2 possui a maior relevância para esta seleção de palavras.
+
+ <p align="center"><img src="assets/quincasborbas.png"></p>
+ <p align="center"> Caso de teste pensado para o documento Quincas Borbas. </p>
+
+ Tratado durante o programa como "Documento 3", este documento representa o .txt "Quincas Borbas". Assim como nos casos anteriores, utilizou-se de palavras que possuem mais incidência neste documento. Para este exemplo utilizou-se os nomes "Sophia" e "Rubião". Neste caso específico é mais fácil de notar a manipulação feita na entrada, uma vez que nenhum dos nomes possui indidência nos outros documentos, portanto o TF-IDF retorna a relevância dos outros documentos como zero e, novamente, acerta ao elencar o documento 3 como o mais relevante para esta entrada.
+
+ <p align="center"><img src="assets/SemanaMachadodeAssis.png"></p>
+ <p align="center"> Caso de teste pensado para o documento Semana Machado de Assis. </p>
+ 
+ Tratado durante o programa como "Documento 4", este documento representa o .txt "Semana Machado de Assis". De forma análoga ao que foi feito durante os outros testes, esse exemplo utiliza as palavras "folhas" e "Tiradentes" para tendenciar o resultado do TF-IDF, uma vez que a indidência de ambas as palavras no documento 4 é maior. Novamente, como esperado, o algorítmo retorna o esperado, ou seja, a relevância do documento 4 é a maior neste caso.
+
+ <p align="center"><img src="assets/Terremoto.png"></p>
+ <p align="center"> Caso de teste pensado para o documento Terremoto. </p>
+
+ <p align="center"><img src="assets/Geral1.png"></p>
+ <p align="center"> Caso de teste pensado para para ser geral, sem tendenciar à um documento. </p>
+
+ <p align="center"><img src="assets/Geral2.png"></p>
+ <p align="center"> Caso de teste pensado para ser geral, sem tendenciar à um documento. </p>
+  
+  
+</p>
 
 ## Compilação e Execução:
 
